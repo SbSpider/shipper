@@ -3,7 +3,7 @@ syntax = "proto3";
 package go.micro.srv.vessel;
 
 service VesselService {
-    rpc FindAvailable(Specification) returns (Response){}
+    rpc FindAvailable(Specification) returns (Response) {}
 }
 
 message Vessel {

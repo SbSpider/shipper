@@ -19,14 +19,9 @@ import fmt "fmt"
 import math "math"
 
 import (
-	context "golang.org/x/net/context"
-	grpc "google.golang.org/grpc"
-)
-
-import (
 	client "github.com/micro/go-micro/client"
 	server "github.com/micro/go-micro/server"
-	context1 "golang.org/x/net/context"
+	context "golang.org/x/net/context"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -152,85 +147,13 @@ func init() {
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConn
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
-
-// Client API for VesselService service
-
-type VesselServiceClient interface {
-	FindAvailable(ctx context.Context, in *Specification, opts ...grpc.CallOption) (*Response, error)
-}
-
-type vesselServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewVesselServiceClient(cc *grpc.ClientConn) VesselServiceClient {
-	return &vesselServiceClient{cc}
-}
-
-func (c *vesselServiceClient) FindAvailable(ctx context.Context, in *Specification, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := grpc.Invoke(ctx, "/go.micro.srv.vessel.VesselService/FindAvailable", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for VesselService service
-
-type VesselServiceServer interface {
-	FindAvailable(context.Context, *Specification) (*Response, error)
-}
-
-func RegisterVesselServiceServer(s *grpc.Server, srv VesselServiceServer) {
-	s.RegisterService(&_VesselService_serviceDesc, srv)
-}
-
-func _VesselService_FindAvailable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Specification)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VesselServiceServer).FindAvailable(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/go.micro.srv.vessel.VesselService/FindAvailable",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VesselServiceServer).FindAvailable(ctx, req.(*Specification))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _VesselService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "go.micro.srv.vessel.VesselService",
-	HandlerType: (*VesselServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "FindAvailable",
-			Handler:    _VesselService_FindAvailable_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/vessel/vessel.proto",
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context1.Context
 var _ client.Option
 var _ server.Option
 
 // Client API for VesselService service
 
 type VesselServiceClient interface {
-	FindAvailable(ctx context1.Context, in *Specification, opts ...client.CallOption) (*Response, error)
+	FindAvailable(ctx context.Context, in *Specification, opts ...client.CallOption) (*Response, error)
 }
 
 type vesselServiceClient struct {
@@ -251,7 +174,7 @@ func NewVesselServiceClient(serviceName string, c client.Client) VesselServiceCl
 	}
 }
 
-func (c *vesselServiceClient) FindAvailable(ctx context1.Context, in *Specification, opts ...client.CallOption) (*Response, error) {
+func (c *vesselServiceClient) FindAvailable(ctx context.Context, in *Specification, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.serviceName, "VesselService.FindAvailable", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -264,7 +187,7 @@ func (c *vesselServiceClient) FindAvailable(ctx context1.Context, in *Specificat
 // Server API for VesselService service
 
 type VesselServiceHandler interface {
-	FindAvailable(context1.Context, *Specification, *Response) error
+	FindAvailable(context.Context, *Specification, *Response) error
 }
 
 func RegisterVesselServiceHandler(s server.Server, hdlr VesselServiceHandler, opts ...server.HandlerOption) {
@@ -275,7 +198,7 @@ type VesselService struct {
 	VesselServiceHandler
 }
 
-func (h *VesselService) FindAvailable(ctx context1.Context, in *Specification, out *Response) error {
+func (h *VesselService) FindAvailable(ctx context.Context, in *Specification, out *Response) error {
 	return h.VesselServiceHandler.FindAvailable(ctx, in, out)
 }
 
